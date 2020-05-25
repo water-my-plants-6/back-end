@@ -34,10 +34,10 @@ router.post("/login", async (req, res, next) => {
 			return res.status(401).json(authError)
         }
 
-        const number = await Users.findBy({ phoneNumber: req.body.phoneNumber })
-		if (!number) {
-			return res.status(401).json(authError)
-        }
+        // const number = await Users.findBy({ phoneNumber: req.body.phoneNumber })
+		// if (!number) {
+		// 	return res.status(401).json(authError)
+        // }
         
 		const passwordValid = await bcrypt.compare(req.body.password, user.password)
 		if (!passwordValid) {
