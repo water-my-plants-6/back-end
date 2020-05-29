@@ -1,20 +1,28 @@
-exports.up = async function(knex) {
-	return knex.schema.createTable("users", (table) => {
-		table.increments()
-		table.text("username").notNull().unique()
-        table.text("password").notNull()
-        table.varchar("phoneNumber").notNull()
+exports.up = function(knex) {
+	return knex.schema.createTable("users", tbl => {
+		tbl.increments()
+		tbl.string("username").notNullable().unique()
+        tbl.string("password").notNullable()
+        tbl.string("phoneNumber").notNullable()
     })
     
-    .createTable('ingredients', tbl => {
+    .createTable('plants', tbl => {
         tbl.increments('id');
-        tbl.string('name').notNull()
-        tbl.integer('recipe_id').notNull()
-        .references('id').inTable('recipes')
-        tbl.float('quantity')
+        tbl.string('nickname').notNullable()
+        tbl.string('species').notNullable()
+        tbl.string('h2oFrequency').notNullable()
+        tbl.integer('user_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('users')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
     })
 }
 
-exports.down = async function(knex) {
-	return knex.schema.dropTableIfExists("users")
+exports.down = function(knex) {
+    return knex.schema
+    .dropTableIfExists('plants')
+    .dropTableIfExists('users')
 }
