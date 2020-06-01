@@ -24,12 +24,20 @@ server.get("/", (req, res, next) => {
 })
 
 server.use((err, req, res, next) => {
-	console.log(err)
+	// console.log(err)
 	res.status(500).json({
 		message: "Something went wrong",
 	})
 })
 
-server.listen(port, () => {
-	console.log(`Running at http://localhost:${port}`)
-})
+// server.listen(port, () => {
+// 	// console.log(`Running at http://localhost:${port}`)
+// })
+
+if (!module.parent) {
+	server.listen(port, () => {
+	  console.log(`Server running on port ${port}`);
+	});
+  } 
+
+module.exports = server;
